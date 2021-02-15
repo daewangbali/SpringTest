@@ -8,6 +8,7 @@
 	<Loggers>
 		<Logger name="kr.co.testgj" level="info" />
 		<Logger name="kr.co.roottest" level="info" />
+		<Logger name="kr.co.dbtest" level="info" />
 		<Logger name="org.springframework.core" level="info" />
 		<Logger name="org.springframework.beans" level="info" />
 		<Logger name="org.springframework.context" level="info" />
