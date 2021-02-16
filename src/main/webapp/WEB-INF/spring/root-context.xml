@@ -26,5 +26,8 @@
 	
 	<mybatis-spring:scan base-package="kr.co.dbtest"/>
 	
-	<context:component-scan base-package="kr.co.roottest"></context:component-scan>
+	<context:component-scan base-package="kr.co.roottest"/>
+	
+	<context:component-scan base-package="kr.co.test"/>
+	
 </beans>

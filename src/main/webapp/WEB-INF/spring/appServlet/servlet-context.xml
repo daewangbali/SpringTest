@@ -23,6 +23,9 @@
 	
 	<context:component-scan base-package="kr.co.testgj" />
 	
+	<context:component-scan base-package="kr.co.test"/>
+
+	
 	
 	
 </beans:beans>
