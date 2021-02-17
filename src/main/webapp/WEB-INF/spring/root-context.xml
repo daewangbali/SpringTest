@@ -16,7 +16,7 @@
 		<property name="password" value="gjgreen"></property>
 	</bean>
 	
-	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		<constructor-arg ref="hikariConfi"></constructor-arg>
 	</bean>	
 	
@@ -25,6 +25,8 @@
 	</bean>
 	
 	<mybatis-spring:scan base-package="kr.co.dbtest"/>
+	
+	<mybatis-spring:scan base-package="kr.co.mapper"/>
 	
 	<context:component-scan base-package="kr.co.roottest"/>
 	
