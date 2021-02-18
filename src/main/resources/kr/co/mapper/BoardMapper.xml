@@ -6,4 +6,34 @@
 	<select id="getList" resultType="kr.co.domain.BoardVO">
 		select * from tbl_board
 	</select>
+	
+	<insert id="insert">
+		insert into tbl_board (bno, title, content, writer) 
+		values (seq_board.nextval, #{title}, #{content}, #{writer})
+	</insert>
+	
+	<insert id="insertSelectKey">
+		<selectKey order="BEFORE" resultType="Long" keyProperty="bno">
+			select seq_board.nextval from dual
+		</selectKey>
+		insert into tbl_board (bno, title, content, writer) 
+		values (#{bno}, #{title}, #{content}, #{writer})
+	</insert>
+	
+	<select id="read" resultType="kr.co.domain.BoardVO">
+		select * from tbl_board where bno = #{bno}
+	</select>
+	
+	<update id="update">
+		UPDATE tbl_board set
+		title = #{title},
+		content = #{content},
+		updatedate = sysdate
+		WHERE bno = #{bno}
+	</update>
+	
+	<delete id="delete">
+		DELETE from tbl_board WHERE bno = #{bno}
+	</delete>
+	
 </mapper>

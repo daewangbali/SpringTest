@@ -12,8 +12,8 @@
 	<bean id="hikariConfi" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
 		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:system"></property>
-		<property name="username" value="gjgreen"></property>
-		<property name="password" value="gjgreen"></property>
+		<property name="username" value="gjtest"></property>
+		<property name="password" value="gjtest"></property>
 	</bean>
 	
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
@@ -31,5 +31,7 @@
 	<context:component-scan base-package="kr.co.roottest"/>
 	
 	<context:component-scan base-package="kr.co.test"/>
+	
+	<context:component-scan base-package="kr.co.service"/>
 	
 </beans>
