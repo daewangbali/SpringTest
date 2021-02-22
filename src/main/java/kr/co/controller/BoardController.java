@@ -35,7 +35,12 @@ public class BoardController {
 		ra.addAttribute("result", bno);
 		ra.addFlashAttribute("result", bno);
 		
-		return "redirect:/board/list";
+		return "redirect:/board/get?bno="+bno;
+	}
+	
+	@GetMapping("/register")
+	public void register() {
+		log.info("register get..............");
 	}
 	
 	@GetMapping("/get")

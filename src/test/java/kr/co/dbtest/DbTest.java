@@ -32,8 +32,8 @@ public class DbTest {
 		
 		//오라클연동
 		String url = "jdbc:oracle:thin:@localhost:1521:system"; //자바랑 오라클을 연동하는 매개체,뭐랑 연동?,
-		String id = "gjgreen";
-		String pw = "gjgreen";
+		String id = "gjtest";
+		String pw = "gjtest";
 		
 		Class cla = Class.forName("oracle.jdbc.OracleDriver"); //드라이버네임 체크
 		log.info(cla);
