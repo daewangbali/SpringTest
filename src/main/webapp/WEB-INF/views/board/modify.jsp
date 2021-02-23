@@ -19,44 +19,51 @@
 					DataTables documentation</a> .
 			</div>
 		</div>
+
 		<div class="card mb-4">
 			<div class="card-header">
-				<i class="fas fa-table mr-1"></i> Register
+				<i class="fas fa-table mr-1"></i> Modify
 			</div>
+
 			<div class="card-body">
-				<form action="/board/register" method="post">
-					<div class="table-responsive">
+				<div class="table-responsive">
+					<form action="/board/modify" method="post">
 						<div class="form-group col-md-12">
 							<div class="mb-3">
 								<label for="title" class="form-label">Title</label> <input
 									type="text" class="form-control border border-dark" id="title"
-									name="title" placeholder="Enter Title" required="required">
+									name="title" value="<c:out value='${board.title }'></c:out>"
+									required="required">
 							</div>
 						</div>
-						<div class="form-group col-md-12">
-							<div class="mb-3 row">
-								<label for="writer" class="col-sm-2 col-form-label">Writer</label>
-								<div class="col-sm-10">
-									<input type="text" placeholder="Enter Writer"
-										class="form-control-plaintext rounded" id="writer"
-										name="writer">
-								</div>
-							</div>
+				</div>
+				<div class="form-group col-md-12">
+					<div class="mb-3 row">
+						<label for="writer" class="col-sm-2 col-form-label">Writer</label>
+						<div class="col-sm-10">
+							<input type="text" readonly="readonly"
+								class="form-control-plaintext rounded" id="writer" name="writer"
+								value="<c:out value='${board.writer }'></c:out>">
 						</div>
-						<div class="form-group col-md-12">
-							<div class="mb-3">
-								<label for="contents" class="form-label">Content</label>
-								<textarea class="form-control border border-dark" id="content"
-									name="content" rows="3" placeholder="Enter Content"></textarea>
-							</div>
-						</div>
-						<input type="submit" value="submit" class="btn btn-outline-success" required="required" style="float: right"> 
-							<a href="/board/list" class="btn btn-outline-dark" style="float: right;">Back to List</a>
 					</div>
+				</div>
+				<div class="form-group col-md-12">
+					<div class="mb-3">
+						<label for="content" class="form-label">Content</label>
+						<textarea class="form-control border border-dark" id="content"
+							name="content" rows="3" required="required"> <c:out
+								value="${board.content }"></c:out></textarea>
+					</div>
+				</div>
+				<input type="hidden" name="bno" id="bno" value="${board.bno }">
+				<input type="submit" class="btn btn-outline-primary" value="submit"
+					style="float: right;"> <a href="/board/list"
+					class="btn btn-outline-dark" style="float: right;">Back to List</a>
 				</form>
 			</div>
 		</div>
 	</div>
 </main>
+
 
 <%@ include file="../includes/footer.jsp"%>

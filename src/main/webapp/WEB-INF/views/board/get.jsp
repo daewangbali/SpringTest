@@ -29,9 +29,10 @@
 				<div class="table-responsive">
 					<div class="form-group col-md-12">
 						<div class="mb-3">
-							<label for="title" class="form-label ">Title</label> 
-							<input type="text" class="form-control border border-dark" 
-							id="title" name="title" value="${board.title }" readonly="readonly">
+							<label for="title" class="form-label">Title</label> <input
+								type="text" class="form-control border border-dark" id="title"
+								name="title" value="<c:out value='${board.title }'></c:out>"
+								readonly="readonly">
 						</div>
 					</div>
 				</div>
@@ -40,8 +41,8 @@
 						<label for="writer" class="col-sm-2 col-form-label">Writer</label>
 						<div class="col-sm-10">
 							<input type="text" readonly="readonly"
-								class="form-control-plaintext rounded"
-								id="writer" name="writer" value="${board.writer }">
+								class="form-control-plaintext rounded" id="writer" name="writer"
+								value="<c:out value='${board.writer }'></c:out>">
 						</div>
 					</div>
 				</div>
@@ -49,14 +50,56 @@
 					<div class="mb-3">
 						<label for="content" class="form-label">Content</label>
 						<textarea class="form-control border border-dark" id="content"
-							name="content" rows="3" readonly="readonly">${board.content } </textarea>
+							name="content" rows="3" readonly="readonly"> <c:out
+								value="${board.content }"></c:out></textarea>
 					</div>
 				</div>
-				<a href="/board/list" class="btn btn-outline-dark"
-					style="float: right;">Back to List</a>
+				<form action="/board/remove" method="post">
+					<input type="hidden" id="bno" name="bno" value="${board.bno }">
+					<input type="button" value="remove" id="btn1"
+					 	class="btn btn-outline-danger" style="float: right;"> 
+					 	<a
+						href="/board/modify?bno=${board.bno }"
+						class="btn btn-outline-primary" style="float: right;">Modify</a> 
+						<a
+						href="/board/list" class="btn btn-outline-dark"
+						style="float: right;">Back to List</a>
+				</form>
 			</div>
 		</div>
 	</div>
 </main>
+<div class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary"data-dismiss="modal" id="btn2">Remove</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		
+		$('#btn1').click(function(e){
+			e.preventDefault();
+			$('.modal-body').html("Are you sure you want to remove?");
+		$('.modal').modal('show');
+		});
+		
+		$('#btn2').click(function(e){
+			$('form').submit();
+		});
+		
+	});
+</script>
 
 <%@ include file="../includes/footer.jsp"%>

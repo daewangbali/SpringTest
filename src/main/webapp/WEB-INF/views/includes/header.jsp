@@ -19,7 +19,7 @@
 </head>
 <body class="sb-nav-fixed">
 	<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-		<a class="navbar-brand" href="index.html">Start Bootstrap</a>
+		<a class="navbar-brand" href="/">GjGreen</a>
 		<button class="btn btn-link btn-sm order-1 order-lg-0"
 			id="sidebarToggle" href="#">
 			<i class="fas fa-bars"></i>
@@ -136,11 +136,10 @@
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-chart-area"></i>
 							</div> Charts
-						</a> <a class="nav-link" href="tables.html">
-							<div class="sb-nav-link-icon">
-								<i class="fas fa-table"></i>
-							</div> Tables
-						</a>
+						</a> <a class="nav-link" href="/board/list">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Board
+                            </a>
 					</div>
 				</div>
 				<div class="sb-sidenav-footer">
