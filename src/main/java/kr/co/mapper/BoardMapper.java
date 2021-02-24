@@ -3,6 +3,7 @@ package kr.co.mapper;
 import java.util.List;
 
 import kr.co.domain.BoardVO;
+import kr.co.domain.Criteria;
 
 public interface BoardMapper {
 	
@@ -19,5 +20,7 @@ public interface BoardMapper {
 	public int update(BoardVO board);
 	
 	public int delete(Long bno);
+	
+	public List<BoardVO> getListPage(Criteria cri);
 
 }

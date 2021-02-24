@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import kr.co.domain.BoardVO;
+import kr.co.domain.Criteria;
 import kr.co.service.BoardService;
 import lombok.extern.log4j.Log4j2;
 
@@ -83,6 +84,17 @@ public class BoardServiceTest {
 		log.info(bs.remove(16L));
 		
 		this.getListTest();
+	}
+	
+	@Test
+	public void getListPageTest() {
+		log.info("getListPageTest.....................");
+		Criteria cri = new Criteria(2,15);
+		List<BoardVO> vo = bs.getList(cri);
+		
+		for(BoardVO boardVO : vo) {
+			log.info(boardVO);
+		}
 	}
 	
 

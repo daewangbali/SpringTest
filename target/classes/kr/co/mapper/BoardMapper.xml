@@ -36,4 +36,14 @@
 		DELETE from tbl_board WHERE bno = #{bno}
 	</delete>
 	
+	<select id="getListPage" resultType="kr.co.domain.BoardVO">
+	<![CDATA[
+		SELECT * FROM
+		(SELECT /*+index_desc(tbl_board pk_board)*/ ROWNUM rn, bno, title,
+		content,regdate,updatedate FROM tbl_board WHERE bno >0 and ROWNUM > 0 and
+		ROWNUM <= (#{pageNum} * #{amount}))
+	    WHERE rn > ((#{pageNum} - 1) * #{amount})
+	]]>
+	</select>
+	
 </mapper>

@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import kr.co.domain.BoardVO;
+import kr.co.domain.Criteria;
 import kr.co.mapper.BoardMapper;
 import lombok.extern.log4j.Log4j2;
 
@@ -84,6 +85,17 @@ public class BoardMapperTest {
 		
 		this.getListTest();
 
+	}
+	
+	@Test
+	public void getListPageTest() {
+		log.info("getListPageTest.....................");
+		Criteria cri = new Criteria();
+		List<BoardVO> vo = bm.getListPage(cri);
+		
+		for(BoardVO boardVO : vo) {
+			log.info(boardVO);
+		}
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import kr.co.domain.BoardVO;
+import kr.co.domain.Criteria;
 import kr.co.mapper.BoardMapper;
 import lombok.RequiredArgsConstructor;
 
@@ -43,5 +44,13 @@ public class BoardServiceImp implements BoardService {
 	public int remove(Long bno) {
 		return boardMapper.delete(bno);
 	}
+
+	@Override
+	public List<BoardVO> getList(Criteria cri) {
+		
+		return boardMapper.getListPage(cri);
+	}
+	
+	
 
 }

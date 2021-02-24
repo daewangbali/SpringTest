@@ -11,6 +11,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.domain.BoardVO;
+import kr.co.domain.Criteria;
 import kr.co.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -24,10 +25,17 @@ public class BoardController {
 	
 	private final BoardService boardService;
 	
+	/*
 	@GetMapping("/list")
 	public void list(Model model) {
 		log.info("list..............");
 		model.addAttribute("list", boardService.getList());
+	}
+	*/
+	@GetMapping("/list")
+	public void list(Criteria cri, Model model) {
+		log.info("list..............");
+		model.addAttribute("list", boardService.getList(cri));
 	}
 	
 	@PostMapping("/register")
