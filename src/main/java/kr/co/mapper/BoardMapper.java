@@ -14,13 +14,15 @@ public interface BoardMapper {
 	public void insert(BoardVO board);
 	
 	public void insertSelectKey(BoardVO board);
-	
+
 	public BoardVO read(Long bno);
 	
 	public int update(BoardVO board);
 	
-	public int delete(Long bno);
+	public int delete(Long bno); 
 	
-	public List<BoardVO> getListPage(Criteria cri);
+	public List<BoardVO> getListPage(Criteria cri); //추가
+	
+	public Long getTotalCount(Criteria cri); //조건따라서 총 페이지수 바꿔야 하니까 criteria 미리 만들어 놓음
 
 }

@@ -9,6 +9,8 @@ public interface BoardService {
 	
 	public List<BoardVO> getList();
 	
+	public List<BoardVO> getList(Criteria cri);
+	
 	public void register(BoardVO board);
 	
 	public Long registerSelectKey(BoardVO board);
@@ -19,6 +21,5 @@ public interface BoardService {
 	
 	public int remove(Long bno); 
 	
-	public List<BoardVO> getList(Criteria cri);
-
+	public Long getTotalCount(Criteria cri);
 }

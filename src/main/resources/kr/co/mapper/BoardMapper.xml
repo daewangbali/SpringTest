@@ -46,4 +46,9 @@
 	]]>
 	</select>
 	
+	<select id="getTotalCount" resultType="Long">
+		select count(*) from tbl_board
+	
+	</select>
+	
 </mapper>

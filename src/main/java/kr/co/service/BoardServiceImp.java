@@ -50,6 +50,11 @@ public class BoardServiceImp implements BoardService {
 		
 		return boardMapper.getListPage(cri);
 	}
+
+	@Override
+	public Long getTotalCount(Criteria cri) {
+		return boardMapper.getTotalCount(cri);
+	}
 	
 	
 

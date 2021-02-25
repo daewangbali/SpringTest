@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import kr.co.domain.BoardVO;
 import kr.co.domain.Criteria;
+import kr.co.domain.PageDTO;
 import kr.co.service.BoardService;
 import lombok.extern.log4j.Log4j2;
 
@@ -95,6 +96,16 @@ public class BoardServiceTest {
 		for(BoardVO boardVO : vo) {
 			log.info(boardVO);
 		}
+	}
+	
+	@Test
+	public void pageDTOTest() {
+		log.info("pageDTOTest.....................");
+		
+		Criteria cri = new Criteria(35,10);
+		PageDTO page = new PageDTO(cri, 2500L);
+		
+		log.info(page);
 	}
 	
 

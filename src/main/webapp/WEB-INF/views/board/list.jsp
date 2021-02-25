@@ -24,7 +24,7 @@
 		</div>
 	</div>
 	<div class="container-fluid">
-		<h1 class="mt-4">Board</h1>
+		<h1 class="mt-4">TestBoard</h1>
 		<ol class="breadcrumb mb-4">
 			<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
 			<li class="breadcrumb-item active">Board</li>
@@ -45,7 +45,19 @@
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
-					<table class="table table-bordered" id="dataTable" width="100%"
+					<div class="input-group">
+						<select class="custom-select col-md-1 " id="inputGroupSelect04">
+							<option selected>Amount</option>
+							<option value="10">10</option>
+							<option value="20">20</option>
+							<option value="50">50</option>
+							<option value="100">100</option>
+						</select>
+						<div class="input-group-append">
+							<button class="btn btn-outline-secondary getAmount" type="button">Button</button>
+						</div>
+					</div>
+					<table class="table table-bordered" id="" width="100%"
 						cellspacing="0">
 						<thead>
 							<tr>
@@ -69,7 +81,7 @@
 							<c:forEach items="${list }" var="board">
 								<tr>
 									<td><c:out value=" ${board.bno }"></c:out></td>
-									<td><a href="/board/get?bno=${board.bno }"> <c:out
+									<td><a class="move" href="${board.bno }"> <c:out
 												value="${board.title }"></c:out></a></td>
 									<td><c:out value="${board.writer }"></c:out></td>
 									<td><fmt:formatDate value="${board.regdate }"
@@ -80,6 +92,31 @@
 							</c:forEach>
 						</tbody>
 					</table>
+
+					<div style="float: right;">
+						<nav aria-label="Page navigation example">
+							<ul class="pagination">
+								<c:if test="${page.prev }">
+									<li class="page-item"><a class="page-link"
+										href="${page.startPage - 1 }">Prev</a></li>
+								</c:if>
+								<c:forEach begin="${page.startPage }" end="${page.endPage }"
+									var="num">
+									<li
+										class="page-item ${page.cri.pageNum == num ? 'active' : ''}"><a
+										class="page-link" href="${num }">${num }</a></li>
+								</c:forEach>
+								<c:if test="${page.next }">
+									<li class="page-item"><a class="page-link"
+										href="${page.endPage + 1 }">Next</a></li>
+								</c:if>
+							</ul>
+						</nav>
+					</div>
+					<form id="actionForm" method="get">
+						<input type="hidden" name="pageNum" value="${page.cri.pageNum }">
+						<input type="hidden" name="amount" value="${page.cri.amount }">
+					</form>
 				</div>
 			</div>
 		</div>
@@ -89,24 +126,70 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		var result = '<c:out value="${result }"></c:out>';
-		
+
 		showModal(result);
-		
-		function showModal(result){
-			
-			if(result === "success"){
+
+		function showModal(result) {
+
+			if (result === "success") {
 				$('.modal-body').html("Success Remove!");
 				$('.modal').modal('show');
 				history.pushState(null, null, location.href);
-				window.onpopstate = function(){
-					$('.modal-body').html("This content has been removed.");
+				window.onpopstate = function() {
+					$('.modal-body').html(
+							"This content has been removed.");
 					$('.modal').modal('show');
 					history.go(1);
-					history.replace(null,null,null);
+					history.replace(null, null, null);
 				};
 			}
 		}
+
+		var actionForm = $("#actionForm");
+
+		$(".page-link").on("click", function(e) {
+			e.preventDefault();
+
+			var target = $(this).attr("href");
+
+			console.log(target);
+
+			/*현재위치를 가고싶은 위치로 바꾸겠다 */
+
+			actionForm.find("input[name=pageNum]").val(target);
+			actionForm.attr("action", "/board/list").submit();
+
+		});
+
+		$(".move").on("click",function(e) {
+			e.preventDefault();
+					
+			var target = $(this).attr("href");
+
+			onsole.log(target);
+
+			/*현재위치를 가고싶은 위치로 바꾸겠다 */
+			actionForm.append("<input type='hidden' name='bno' value='" + target + "'>");
+			actionForm.attr("action","/board/get").submit();
+
+		});
+		
+		$(".getAmount").on("click",function(e) {
+			
+			e.preventDefault();
+
+			var target = $(this).attr("custom-select").find("option").val();
+
+			console.log(target);
+
+			/*현재위치를 가고싶은 위치로 바꾸겠다 */
+			//actionForm.append("<input type='hidden' name='bno' value='" + target + "'>");
+			//actionForm.attr("action","/board/get").submit();
+
+		});
 	});
+	
+	
 </script>
 
 <%@ include file="../includes/footer.jsp"%>

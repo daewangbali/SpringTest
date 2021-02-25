@@ -1,7 +1,9 @@
 package kr.co.domain;
 
+import lombok.Data;
+
+@Data
 public class Criteria {
-	
 	private int pageNum, amount;
 
 	public Criteria(int pageNum, int amount) {
@@ -13,6 +15,5 @@ public class Criteria {
 	public Criteria() {
 		this(1, 10);
 	}
-	
 
 }
