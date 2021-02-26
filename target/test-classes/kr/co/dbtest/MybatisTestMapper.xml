@@ -6,4 +6,23 @@
 	<select id="getTime02" resultType="string">
 		select sysdate from dual
 	</select>
+	
+	<select id="searchTest" resultType="kr.co.domain.BoardVO">
+		select * from tbl_board where
+		<trim suffix="and">
+			<foreach collection="map" index="key" item="val"
+				separator="or" open="(" close=")">
+				<if test="key=='T'.toString()">
+					title like '%'||#{val}||'%'
+				</if>
+				<if test="key=='C'.toString()">
+					content like '%'||#{val}||'%'
+				</if>
+				<if test="key=='W'.toString()">
+					writer like '%'||#{val}||'%'
+				</if>
+			</foreach>
+		</trim>
+		bno > 0
+	</select>
 </mapper>

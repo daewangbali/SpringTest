@@ -46,12 +46,11 @@
 			<div class="card-body">
 				<div class="table-responsive">
 					<div class="input-group">
-						<select class="custom-select col-md-1 " id="inputGroupSelect04">
-							<option selected>Amount</option>
-							<option value="10">10</option>
-							<option value="20">20</option>
-							<option value="50">50</option>
-							<option value="100">100</option>
+						<select class="custom-select col-md-1 amountNum" id="inputGroupSelect04">
+							<option ${page.cri.amount eq 10? 'selected':'' } value="10">10</option>
+							<option ${page.cri.amount eq 20? 'selected':'' } value="20">20</option>
+							<option ${page.cri.amount eq 50? 'selected':'' } value="50">50</option>
+							<option ${page.cri.amount eq 100? 'selected':'' } value="100">100</option>
 						</select>
 						<div class="input-group-append">
 							<button class="btn btn-outline-secondary getAmount" type="button">Button</button>
@@ -166,7 +165,7 @@
 					
 			var target = $(this).attr("href");
 
-			onsole.log(target);
+			console.log(target);
 
 			/*현재위치를 가고싶은 위치로 바꾸겠다 */
 			actionForm.append("<input type='hidden' name='bno' value='" + target + "'>");
@@ -178,13 +177,13 @@
 			
 			e.preventDefault();
 
-			var target = $(this).attr("custom-select").find("option").val();
+			var target = $(".amountNum").val();
 
 			console.log(target);
 
 			/*현재위치를 가고싶은 위치로 바꾸겠다 */
-			//actionForm.append("<input type='hidden' name='bno' value='" + target + "'>");
-			//actionForm.attr("action","/board/get").submit();
+			actionForm.find("input[name=amount]").val(target);
+			actionForm.attr("action","/board/list").submit();
 
 		});
 	});

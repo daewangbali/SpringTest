@@ -3,6 +3,7 @@ package kr.co.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,13 +61,13 @@ public class BoardController {
 	}
 	
 	@GetMapping({"/get","/modify"})
-	public void get(@RequestParam("bno") Long bno, Model model) {
+	public void get(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, Model model) {
 		log.info("get................");
 		model.addAttribute("board",boardService.get(bno));
 	}
 	
 	@PostMapping("/modify")
-	public String modify(BoardVO board, RedirectAttributes ra) { 
+	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri,RedirectAttributes ra) { 
 		log.info("modify..............");
 		
 		log.info("modify : " + board.getBno());
@@ -77,11 +78,14 @@ public class BoardController {
 			ra.addFlashAttribute("result", "success");
 		}
 		
+		ra.addAttribute("pageNum", cri.getPageNum());
+		ra.addAttribute("amount", cri.getAmount());
+		
 		return "redirect:/board/get?bno="+board.getBno();
 	}
 	
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno ,RedirectAttributes ra) {
+	public String remove(@RequestParam("bno") Long bno , @ModelAttribute("cri") Criteria cri, RedirectAttributes ra) {
 		log.info("remove..............");
 		
 		int count = boardService.remove(bno);
@@ -89,6 +93,9 @@ public class BoardController {
 		if(count==1) {
 			ra.addFlashAttribute("result", "success");
 		}
+		
+		ra.addAttribute("pageNum", cri.getPageNum());
+		ra.addAttribute("amount", cri.getAmount());
 		
 		return "redirect:/board/list";
 		

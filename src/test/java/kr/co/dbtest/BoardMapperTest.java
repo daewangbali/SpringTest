@@ -97,5 +97,20 @@ public class BoardMapperTest {
 			log.info(boardVO);
 		}
 	}
-
+	
+	@Test
+	public void searchTest() {
+		log.info("searchTest..............");
+		Criteria cri = new Criteria();
+		
+		
+		cri.setType("T");
+		cri.setKeyword("test");
+		
+		List<BoardVO> list = bm.getListPage(cri);
+		
+		for(BoardVO boardVO : list) {
+			log.info(boardVO);
+		}
+	}
 }
