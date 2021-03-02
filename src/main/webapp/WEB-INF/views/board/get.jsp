@@ -58,6 +58,9 @@
 					<input type="hidden" id="bno" name="bno" value="${board.bno }">
 					<input type="hidden" name="pageNum" value="${cri.pageNum }">
 					<input type="hidden" name="amount" value="${cri.amount }">
+					<input type="hidden" name="type" value="${cri.type }">
+					<input type="hidden" name="keyword" value="${cri.keyword }">
+					
 					<button class="btn btn-outline-danger" id="btn1" 
 						style="float: right;" >Remove</button>
 					<button class="btn btn-outline-dark" id="listBtn"

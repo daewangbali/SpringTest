@@ -3,6 +3,22 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.mapper.BoardMapper">
+<sql id="criteria">
+	<trim suffix="and">
+			<foreach collection="arrayType" item="type"
+				separator="or" open="(" close=")">
+				<if test="type=='T'.toString()">
+					title like '%'||#{keyword}||'%'
+				</if>
+				<if test="type=='C'.toString()">
+					content like '%'||#{keyword}||'%'
+				</if>
+				<if test="type=='W'.toString()">
+					writer like '%'||#{keyword}||'%'
+				</if>
+			</foreach>
+		</trim>
+</sql>
 	<select id="getList" resultType="kr.co.domain.BoardVO">
 		select * from tbl_board
 	</select>
@@ -39,26 +55,11 @@
 	<select id="getListPage" resultType="kr.co.domain.BoardVO">
 	<![CDATA[
 		SELECT * FROM
-		(SELECT /*+index_desc(tbl_board pk_board)*/ ROWNUM rn, bno, title, content,regdate,updatedate 
+		(SELECT /*+index_desc(tbl_board pk_board)*/ ROWNUM rn, bno, title, content,writer,regdate,updatedate 
 		FROM tbl_board 
 		WHERE
 	]]>
-	
-		<trim suffix="and">
-			<foreach collection="type" item="type"
-				separator="or" open="(" close=")">
-				<if test="key=='T'.toString()">
-					title like '%'||#{keyword}||'%'
-				</if>
-				<if test="key=='C'.toString()">
-					content like '%'||#{keyword}||'%'
-				</if>
-				<if test="key=='W'.toString()">
-					writer like '%'||#{keyword}||'%'
-				</if>
-			</foreach>
-		</trim>
-	
+	<include refid="criteria"></include>
 	<![CDATA[	
 		bno >0 and ROWNUM > 0 and ROWNUM <= (#{pageNum} * #{amount}))
 		
@@ -67,7 +68,12 @@
 	</select>
 	
 	<select id="getTotalCount" resultType="Long">
-		select count(*) from tbl_board
+		select count(*) from 
+		tbl_board where
+		<include refid="criteria"></include>
+		<![CDATA[
+			bno > 0
+		]]>
 	
 	</select>
 	

@@ -17,7 +17,7 @@ public class Criteria {
 		this(1, 10);
 	}
 	
-	public String[] getType() {
+	public String[] getArrayType() {
 		return type == null ? new String[] {}: type.split("");
 	}
 

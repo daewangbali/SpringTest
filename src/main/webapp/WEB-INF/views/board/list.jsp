@@ -24,7 +24,7 @@
 		</div>
 	</div>
 	<div class="container-fluid">
-		<h1 class="mt-4">TestBoard</h1>
+		<h1 class="mt-4">Test Board</h1>
 		<ol class="breadcrumb mb-4">
 			<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
 			<li class="breadcrumb-item active">Board</li>
@@ -45,7 +45,8 @@
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
-					<div class="input-group">
+				<form action="/board/list" method="get" id="searchForm" style="margin: 0 0 10px">
+					<div class="input-group" style="position:absolute ;  width : 15px 0" >
 						<select class="custom-select col-md-1 amountNum" id="inputGroupSelect04">
 							<option ${page.cri.amount eq 10? 'selected':'' } value="10">10</option>
 							<option ${page.cri.amount eq 20? 'selected':'' } value="20">20</option>
@@ -56,6 +57,27 @@
 							<button class="btn btn-outline-secondary getAmount" type="button">Button</button>
 						</div>
 					</div>
+					<div class="input-group" style="width : 15px 0 ; justify-content: flex-end;">
+							<select class="custom-select col-md-1" name="type"
+								id="inputGroupSelect04">
+								<option ${page.cri.type == null? 'selected':'' } value="">---</option>
+								<option ${page.cri.type == 'T'? 'selected':'' } value="T">제목</option>
+								<option ${page.cri.type == 'C'? 'selected':'' } value="C">내용</option>
+								<option ${page.cri.type == 'W'? 'selected':'' } value="W">작성자</option>
+								<option ${page.cri.type == 'TC'? 'selected':'' } value="TC">제목+내용</option>
+								<option ${page.cri.type == 'CW'? 'selected':'' } value="CW">내용+작성자</option>
+								<option ${page.cri.type == 'TW'? 'selected':'' } value="TW">제목+작성자</option>
+								<option ${page.cri.type == 'TCW'? 'selected':'' } value="TCW">전체</option>
+							</select>
+							<div class="input-group-append">
+								<input type="text" name="keyword" value="${page.cri.keyword }">
+								<input type="hidden" name="pageNum" value="${page.cri.pageNum }">
+								<input type="hidden" name="amount" value="${page.cri.amount }">
+								<button class="btn btn-outline-secondary getSearch"
+									type="button">Button</button>
+							</div>
+						</div>
+					</form>
 					<table class="table table-bordered" id="" width="100%"
 						cellspacing="0">
 						<thead>
@@ -115,6 +137,8 @@
 					<form id="actionForm" method="get">
 						<input type="hidden" name="pageNum" value="${page.cri.pageNum }">
 						<input type="hidden" name="amount" value="${page.cri.amount }">
+						<input type="hidden" name="type" value="${page.cri.type }">
+						<input type="hidden" name="keyword" value="${page.cri.keyword }">
 					</form>
 				</div>
 			</div>
@@ -124,6 +148,8 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		var actionForm = $("#actionForm");
+
 		var result = '<c:out value="${result }"></c:out>';
 
 		showModal(result);
@@ -144,8 +170,6 @@
 			}
 		}
 
-		var actionForm = $("#actionForm");
-
 		$(".page-link").on("click", function(e) {
 			e.preventDefault();
 
@@ -160,21 +184,26 @@
 
 		});
 
-		$(".move").on("click",function(e) {
-			e.preventDefault();
-					
-			var target = $(this).attr("href");
+		$(".move")
+				.on(
+						"click",
+						function(e) {
+							e.preventDefault();
 
-			console.log(target);
+							var target = $(this).attr("href");
 
-			/*현재위치를 가고싶은 위치로 바꾸겠다 */
-			actionForm.append("<input type='hidden' name='bno' value='" + target + "'>");
-			actionForm.attr("action","/board/get").submit();
+							console.log(target);
 
-		});
-		
-		$(".getAmount").on("click",function(e) {
-			
+							/*현재위치를 가고싶은 위치로 바꾸겠다 */
+							actionForm
+									.append("<input type='hidden' name='bno' value='" + target + "'>");
+							actionForm.attr("action",
+									"/board/get").submit();
+
+						});
+
+		$(".getAmount").on("click", function(e) {
+
 			e.preventDefault();
 
 			var target = $(".amountNum").val();
@@ -183,12 +212,26 @@
 
 			/*현재위치를 가고싶은 위치로 바꾸겠다 */
 			actionForm.find("input[name=amount]").val(target);
-			actionForm.attr("action","/board/list").submit();
+			actionForm.attr("action", "/board/list").submit();
 
 		});
+		
+		var searchForm = $("#searchForm");
+		
+		$(".getSearch").on("click", function(e){
+			e.preventDefault();
+			
+			var result = $(".getType").val();
+			console.log(result);
+			
+			searchForm.append("<input type='hidden' name='type value='" + result +">");
+			searchForm.find("input[name='pageNum']").val(1);
+			
+			searchForm.submit();
+		});
+		
+		
 	});
-	
-	
 </script>
 
 <%@ include file="../includes/footer.jsp"%>

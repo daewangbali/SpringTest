@@ -89,6 +89,16 @@ public class BoardControllerTest {
 		
 	}
 	
+	@Test
+	public void searchTest() throws Exception {
+		log.info("searchTest...............");
+		RequestBuilder url = MockMvcRequestBuilders.get("/board/list")
+				.param("type", "TCW")
+				.param("keyword", "test");
+		
+		log.info(mock.perform(url).andReturn().getModelAndView());
+	}
+	
 	
 	
 	

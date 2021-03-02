@@ -104,10 +104,12 @@ public class BoardMapperTest {
 		Criteria cri = new Criteria();
 		
 		
-		cri.setType("T");
+		cri.setType("TCW");
 		cri.setKeyword("test");
 		
 		List<BoardVO> list = bm.getListPage(cri);
+		
+		log.info("totalcount : "+bm.getTotalCount(cri));
 		
 		for(BoardVO boardVO : list) {
 			log.info(boardVO);
