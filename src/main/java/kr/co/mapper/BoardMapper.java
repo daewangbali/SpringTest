@@ -3,6 +3,7 @@ package kr.co.mapper;
 import java.util.List;
 
 import kr.co.domain.BoardVO;
+import kr.co.domain.CommentVO;
 import kr.co.domain.Criteria;
 
 public interface BoardMapper {
@@ -25,4 +26,14 @@ public interface BoardMapper {
 	
 	public Long getTotalCount(Criteria cri); //조건따라서 총 페이지수 바꿔야 하니까 criteria 미리 만들어 놓음
 
+	//2020303 추가
+	public void comment_insert(CommentVO comment);
+	
+	public List<CommentVO> comment_list(Long bno);
+	
+	public int comment_update(CommentVO comment);
+	
+	public int comment_delete(Long id);
+	
+	
 }

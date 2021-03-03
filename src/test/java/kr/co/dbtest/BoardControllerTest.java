@@ -99,6 +99,16 @@ public class BoardControllerTest {
 		log.info(mock.perform(url).andReturn().getModelAndView());
 	}
 	
+	@Test
+	public void comment_get_listTest() throws Exception{
+		log.info("comment_get_listTest");
+		RequestBuilder url = MockMvcRequestBuilders.get("/board/comment/comment_get_list")
+				.param("bno", "5000");
+		log.info(mock.perform(url).andReturn().getModelAndView());
+	}
+	
+	
+	
 	
 	
 	

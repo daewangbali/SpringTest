@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import kr.co.domain.BoardVO;
+import kr.co.domain.CommentVO;
 import kr.co.domain.Criteria;
 import kr.co.domain.PageDTO;
 import kr.co.service.BoardService;
@@ -126,6 +127,56 @@ public class BoardServiceTest {
 			log.info(boardVO);
 		}
 	}
+	
+	//20210303 추가
+		@Test
+		public void comment_registerTest() {
+			log.info("comment_registerTest.................");
+			
+			CommentVO comment = new CommentVO();
+			
+			comment.setWriter("commnet 작성자 10");
+			comment.setContent("comment 내용 10");
+			comment.setBno(5000L);
+			bs.comment_register(comment);
+			
+			this.comment_get_listTest();
+		}
+		
+		@Test
+		public void comment_get_listTest() {
+			log.info("comment_getlistTest.................");
+			List<CommentVO> list = bs.comment_get_list(5000L);
+			for(CommentVO commentVO : list) {
+				log.info(commentVO);
+			}
+			
+		}
+		
+		@Test
+		public void comment_modifyTest() {
+			log.info("comment_modifyTest.................");
+			
+			CommentVO comment = new CommentVO();
+			
+			comment.setContent("comment 수정내용 100000");
+			comment.setId(12L);
+			bs.comment_modify(comment);
+			
+			this.comment_get_listTest();
+			
+		}
+		
+		@Test
+		public void comment_removeTest() {
+			log.info("comment_removeTest.................");
+			log.info(bs.comment_remove(12L));
+			
+			this.comment_get_listTest();
+			
+		}
+	
+	
 	
 
 }

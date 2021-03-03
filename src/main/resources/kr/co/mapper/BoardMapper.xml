@@ -77,4 +77,23 @@
 	
 	</select>
 	
+	<!-- 추가 -->
+	<insert id="comment_insert">
+		insert into tbl_comment(id, writer, content, bno) 
+		VALUES (SEQ_COMMENT.nextval, #{writer}, #{content}, #{bno})
+	</insert>
+	
+	<select id="comment_list" resultType="kr.co.domain.CommentVO">
+		select * from tbl_comment where bno=#{bno} ORDER BY id DESC
+	</select>
+	
+	<update id="comment_update" >
+		update tbl_comment set content=#{content} where id=#{id}
+	</update>
+	
+	<delete id="comment_delete">
+		delete from tbl_comment where id=#{id}
+	</delete>
+	
+	
 </mapper>
