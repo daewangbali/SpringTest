@@ -24,7 +24,7 @@
 		</div>
 	</div>
 	<div class="container-fluid">
-		<h1 class="mt-4">Test Board</h1>
+		<h1 class="mt-4">Board</h1>
 		<ol class="breadcrumb mb-4">
 			<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
 			<li class="breadcrumb-item active">Board</li>
@@ -45,22 +45,24 @@
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
-				<form action="/board/list" method="get" id="searchForm" style="margin: 0 0 10px">
-					<div class="input-group" style="position:absolute ;  width : 15px 0" >
-						<select class="custom-select col-md-1 amountNum" id="inputGroupSelect04">
-							<option ${page.cri.amount eq 10? 'selected':'' } value="10">10</option>
-							<option ${page.cri.amount eq 20? 'selected':'' } value="20">20</option>
-							<option ${page.cri.amount eq 50? 'selected':'' } value="50">50</option>
-							<option ${page.cri.amount eq 100? 'selected':'' } value="100">100</option>
-						</select>
-						<div class="input-group-append">
-							<button class="btn btn-outline-secondary getAmount" type="button">Button</button>
+					<form action="/board/list" method="get" id="searchForm" style="margin: 0 0 10px">
+						<div class="input-group" style="  width : 15px 0">
+							<select class="custom-select col-md-1 amountNum"
+								id="inputGroupSelect04">
+								<option ${page.cri.amount eq 10? 'selected':'' } value="10">10</option>
+								<option ${page.cri.amount eq 20? 'selected':'' } value="20">20</option>
+								<option ${page.cri.amount eq 50? 'selected':'' } value="50">50</option>
+								<option ${page.cri.amount eq 100? 'selected':'' } value="100">100</option>
+							</select>
+							<div class="input-group-append">
+								<button class="btn btn-outline-secondary getAmount"
+									type="button">Button</button>
+							</div>
 						</div>
-					</div>
-					<div class="input-group" style="width : 15px 0 ; justify-content: flex-end;">
+						<div class="input-group" style="width : 15px 0 ; justify-content: flex-end;">
 							<select class="custom-select col-md-1" name="type"
 								id="inputGroupSelect04">
-								<option ${page.cri.type == null? 'selected':'' } value="">---</option>
+								<option ${page.cri.type == ''? 'selected':'' } value="">---</option>
 								<option ${page.cri.type == 'T'? 'selected':'' } value="T">제목</option>
 								<option ${page.cri.type == 'C'? 'selected':'' } value="C">내용</option>
 								<option ${page.cri.type == 'W'? 'selected':'' } value="W">작성자</option>
@@ -147,47 +149,32 @@
 </main>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		var actionForm = $("#actionForm");
+	$(document)
+			.ready(
+					function() {
+						var actionForm = $("#actionForm");
 
-		var result = '<c:out value="${result }"></c:out>';
+						var result = '<c:out value="${result }"></c:out>';
 
-		showModal(result);
+						showModal(result);
 
-		function showModal(result) {
+						function showModal(result) {
 
-			if (result === "success") {
-				$('.modal-body').html("Success Remove!");
-				$('.modal').modal('show');
-				history.pushState(null, null, location.href);
-				window.onpopstate = function() {
-					$('.modal-body').html(
-							"This content has been removed.");
-					$('.modal').modal('show');
-					history.go(1);
-					history.replace(null, null, null);
-				};
-			}
-		}
+							if (result === "success") {
+								$('.modal-body').html("Success Remove!");
+								$('.modal').modal('show');
+								history.pushState(null, null, location.href);
+								window.onpopstate = function() {
+									$('.modal-body').html(
+											"This content has been removed.");
+									$('.modal').modal('show');
+									history.go(1);
+									history.replace(null, null, null);
+								};
+							}
+						}
 
-		$(".page-link").on("click", function(e) {
-			e.preventDefault();
-
-			var target = $(this).attr("href");
-
-			console.log(target);
-
-			/*현재위치를 가고싶은 위치로 바꾸겠다 */
-
-			actionForm.find("input[name=pageNum]").val(target);
-			actionForm.attr("action", "/board/list").submit();
-
-		});
-
-		$(".move")
-				.on(
-						"click",
-						function(e) {
+						$(".page-link").on("click", function(e) {
 							e.preventDefault();
 
 							var target = $(this).attr("href");
@@ -195,43 +182,60 @@
 							console.log(target);
 
 							/*현재위치를 가고싶은 위치로 바꾸겠다 */
-							actionForm
-									.append("<input type='hidden' name='bno' value='" + target + "'>");
-							actionForm.attr("action",
-									"/board/get").submit();
+
+							actionForm.find("input[name=pageNum]").val(target);
+							actionForm.attr("action", "/board/list").submit();
 
 						});
 
-		$(".getAmount").on("click", function(e) {
+						$(".move")
+								.on(
+										"click",
+										function(e) {
+											e.preventDefault();
 
-			e.preventDefault();
+											var target = $(this).attr("href");
 
-			var target = $(".amountNum").val();
+											console.log(target);
 
-			console.log(target);
+											/*현재위치를 가고싶은 위치로 바꾸겠다 */
+											actionForm
+													.append("<input type='hidden' name='bno' value='" + target + "'>");
+											actionForm.attr("action",
+													"/board/get").submit();
 
-			/*현재위치를 가고싶은 위치로 바꾸겠다 */
-			actionForm.find("input[name=amount]").val(target);
-			actionForm.attr("action", "/board/list").submit();
+										});
 
-		});
-		
-		var searchForm = $("#searchForm");
-		
-		$(".getSearch").on("click", function(e){
-			e.preventDefault();
-			
-			var result = $(".getType").val();
-			console.log(result);
-			
-			searchForm.append("<input type='hidden' name='type value='" + result +">");
-			searchForm.find("input[name='pageNum']").val(1);
-			
-			searchForm.submit();
-		});
-		
-		
-	});
+						$(".getAmount").on("click", function(e) {
+
+							e.preventDefault();
+
+							var target = $(".amountNum").val();
+
+							console.log(target);
+
+							/*현재위치를 가고싶은 위치로 바꾸겠다 */
+							actionForm.find("input[name=amount]").val(target);
+							actionForm.attr("action", "/board/list").submit();
+
+						});
+						
+						var searchForm = $("#searchForm");
+						
+						$(".getSearch").on("click", function(e){
+							e.preventDefault();
+							
+							var result = $(".getType").val();
+							console.log(result);
+							
+							searchForm.append("<input type='hidden' name='type value='" + result +">");
+							searchForm.find("input[name='pageNum']").val(1);
+							
+							searchForm.submit();
+						});
+						
+						
+					});
 </script>
 
 <%@ include file="../includes/footer.jsp"%>

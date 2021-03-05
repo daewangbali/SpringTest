@@ -140,11 +140,11 @@
 			<version>1.2</version>
 		</dependency>
 		
-		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind데이터끼리 연결해주는 거 -->
 		<dependency>
-		    <groupId>org.json</groupId>
-		    <artifactId>json</artifactId>
-		    <version>20201115</version>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.12.2</version>
 		</dependency>
 	
 		<!-- Test -->

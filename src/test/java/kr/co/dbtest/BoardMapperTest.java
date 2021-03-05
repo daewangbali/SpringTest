@@ -150,7 +150,7 @@ public class BoardMapperTest {
 		CommentVO comment = new CommentVO();
 		
 		comment.setContent("comment 수정내용 10");
-		comment.setId(10L);
+		comment.setId(41L);
 		bm.comment_update(comment);
 		
 		this.comment_listTest();
@@ -159,7 +159,7 @@ public class BoardMapperTest {
 	@Test
 	public void comment_deleteTest() {
 		log.info("comment_deleteTest.........");
-		log.info(bm.comment_delete(11L));
+		bm.comment_delete(41L);
 		
 		this.comment_listTest();
 	}

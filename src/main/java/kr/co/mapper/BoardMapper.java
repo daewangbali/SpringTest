@@ -31,9 +31,9 @@ public interface BoardMapper {
 	
 	public List<CommentVO> comment_list(Long bno);
 	
-	public int comment_update(CommentVO comment);
+	public void comment_update(CommentVO comment);
 	
-	public int comment_delete(Long id);
+	public void comment_delete(Long id);
 	
 	
 }

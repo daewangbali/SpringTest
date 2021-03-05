@@ -160,7 +160,7 @@ public class BoardServiceTest {
 			CommentVO comment = new CommentVO();
 			
 			comment.setContent("comment 수정내용 100000");
-			comment.setId(12L);
+			comment.setId(42L);
 			bs.comment_modify(comment);
 			
 			this.comment_get_listTest();
@@ -170,7 +170,7 @@ public class BoardServiceTest {
 		@Test
 		public void comment_removeTest() {
 			log.info("comment_removeTest.................");
-			log.info(bs.comment_remove(12L));
+			bs.comment_remove(42L);
 			
 			this.comment_get_listTest();
 			

@@ -60,7 +60,6 @@
 					<input type="hidden" name="amount" value="${cri.amount }">
 					<input type="hidden" name="type" value="${cri.type }">
 					<input type="hidden" name="keyword" value="${cri.keyword }">
-					
 					<button class="btn btn-outline-danger" id="btn1" 
 						style="float: right;" >Remove</button>
 					<button class="btn btn-outline-dark" id="listBtn"
@@ -70,17 +69,25 @@
 					
 				</form>
 			</div>
+			<div class="input-group">
+				<input type="text" class="input-group-text" 
+				placeholder="Enter Writer" id="comment_writer" >
+				<textarea class="form-control" placeholder="Enter Comment" id="comment_content"></textarea>
+				<button type="button" class="btn btn-outline-info" id="comment_register">Submit</button>
+			</div>
 		</div>
 	</div>
+		<div id="comment_list">
+		</div>
 </main>
-<div class="modal" tabindex="-1">
+<div class="modal" tabindex="-1" id="board_modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Modal title</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="board_modal_body">
         <p>Modal body text goes here.</p>
       </div>
       <div class="modal-footer">
@@ -90,14 +97,16 @@
     </div>
   </div>
 </div>
+
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		var actionForm = $("#actionForm");
 		
 		$('#btn1').click(function(e){
 			e.preventDefault();//이벤트 자동발생 막아줌
-			$('.modal-body').html("Are you sure you want to remove?");
-		$('.modal').modal('show');
+			$('#board_modal_body').html("Are you sure you want to remove?");
+			$('#board_modal').modal('show');
 		});
 		
 		$('#btn2').click(function(e){
@@ -127,6 +136,55 @@
 			actionForm.submit();
 		
 		});
+		
+		comment_list();
+		
+		function comment_list(){
+			$.ajax({
+				type : "GET",
+				url : "/board/comment/comment_get_list?bno=${board.bno}",
+				success : function(result){
+					$("#comment_list").html(result);
+				},
+				error : function(req, text){
+					alert(text+" : "+req.status);
+				}
+			});
+		}
+		
+			
+			$("#comment_register").on("click",function(e){
+				e.preventDefault(); 
+				console.log(".................");
+				
+				var comment = new Object();
+				comment.content = $("#comment_content").val();
+				comment.writer = $("#comment_writer").val();
+				
+				if(comment.content==="" || comment.writer===""){
+					alert("댓글을 입력하세요.");
+					return;
+				}
+				comment.bno = "<c:out value='${board.bno} '></c:out>";
+				
+				console.log(comment.bno);
+				
+				$.ajax({
+					data : JSON.stringify(comment),
+					contentType : "application/json; charset=utf-8",
+					type : "POST",
+					url : "/board/comment/comment_register",
+					success : function(){
+						comment.content = $("#comment_content").val("");
+						comment.writer = $("#comment_writer").val("");
+						comment_list();
+					},
+					error : function(req, text){
+						alert(text+" : "+req.status);
+					}
+				});
+			});
+		
 		
 	});
 </script>

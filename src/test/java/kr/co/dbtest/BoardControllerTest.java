@@ -100,21 +100,43 @@ public class BoardControllerTest {
 	}
 	
 	@Test
-	public void comment_get_listTest() throws Exception{
-		log.info("comment_get_listTest");
+	public void comment_get_listTest() throws Exception {
+		log.info("comment_get_listTest...........");
 		RequestBuilder url = MockMvcRequestBuilders.get("/board/comment/comment_get_list")
 				.param("bno", "5000");
 		log.info(mock.perform(url).andReturn().getModelAndView());
 	}
 	
+	//0304추가
 	
+	@Test
+	public void comment_registerTest() throws Exception {
+		log.info("comment_registerTest.............");
+		RequestBuilder url = MockMvcRequestBuilders.post("/board/comment/comment_register")
+				.param("writer", "작성자 comment 0304")
+				.param("content", "내용 comment 0304")
+				.param("bno", "5000");
+		log.info(mock.perform(url).andReturn().getModelAndView());
+	}
 	
+	@Test
+	public void comment_modifyTest()throws Exception {
+		log.info("comment_modifyTest.............");
+		RequestBuilder url = MockMvcRequestBuilders.post("/board/comment/comment_modify")
+				.param("content", "내용수정 comment 0305")
+				.param("id", "43")
+				.param("bno", "5000");
+		log.info(mock.perform(url).andReturn().getModelAndView());
+		
+	}
 	
+	@Test
+	public void comment_removeTest() throws Exception {
+		log.info("comment_deleteTest.............");
+		RequestBuilder url = MockMvcRequestBuilders.post("/board/comment/comment_remove")
+				.param("id","43")
+				.param("bno", "5000");
+		log.info(mock.perform(url).andReturn().getModelAndView());
+	}
 	
-	
-	
-	
-	
-	
-
 }
