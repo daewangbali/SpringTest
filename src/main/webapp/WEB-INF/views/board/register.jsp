@@ -24,7 +24,7 @@
 				<i class="fas fa-table mr-1"></i> Register
 			</div>
 			<div class="card-body">
-				<form action="/board/register" method="post">
+				<form action="/board/register" method="post" enctype="multipart/form-data">
 					<div class="table-responsive">
 						<div class="form-group col-md-12">
 							<div class="mb-3">
@@ -48,6 +48,11 @@
 								<label for="contents" class="form-label">Content</label>
 								<textarea class="form-control border border-dark" id="content"
 									name="content" rows="3" placeholder="Enter Content"></textarea>
+							</div>
+						</div>
+						<div class="form-group col-md-12">
+							<div class="input-group mb-3">
+								<input type="file" class="form-control" name="file" id="inputGroupFile02">	
 							</div>
 						</div>
 						<input type="submit" value="submit" class="btn btn-outline-success" required="required" style="float: right"> 

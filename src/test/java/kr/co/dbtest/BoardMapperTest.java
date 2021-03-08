@@ -39,6 +39,8 @@ public class BoardMapperTest {
 		vo.setTitle("새글제목 insertTest 10");
 		vo.setContent("새글제목 insertTest 10");
 		vo.setWriter("작성자 insert 10");
+		vo.setFilename("새글파일 insertTest 10");
+		vo.setFilepath("새글경로 insertTest 10");
 		log.info(vo);
 		
 		bm.insert(vo);
@@ -52,6 +54,8 @@ public class BoardMapperTest {
 		vo.setTitle("새글제목 insertTest 10");
 		vo.setContent("새글제목 insertTest 10");
 		vo.setWriter("작성자 insert 10");
+		vo.setFilename("새글파일 insertTest 10");
+		vo.setFilepath("새글경로 insertTest 10");
 		log.info(vo);
 		
 		bm.insertSelectKey(vo);
@@ -71,7 +75,9 @@ public class BoardMapperTest {
 		BoardVO vo = new BoardVO();
 		vo.setTitle("수정제목 insertTest 10");
 		vo.setContent("수정내용 insertTest 10");
-		vo.setBno(10L);
+		vo.setBno(15443L);
+		vo.setFilename("수정파일 updateTest 10");
+		vo.setFilepath("수정경로 updateTest 10");
 		log.info(vo);
 		
 		log.info(bm.update(vo));
