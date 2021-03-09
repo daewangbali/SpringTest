@@ -32,23 +32,22 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${org.springframework-version}</version>
-		</dependency>
-		
+		</dependency>	
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
 			<version>${org.springframework-version}</version>
-		</dependency>
+		</dependency>	
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.zaxxer/HikariCP -->
 		<dependency>
 		    <groupId>com.zaxxer</groupId>
 		    <artifactId>HikariCP</artifactId>
@@ -68,6 +67,7 @@
 		</dependency>
 		
 		
+				
 				
 		<!-- AspectJ -->
 		<dependency>
@@ -94,7 +94,6 @@
 			<version>${org.slf4j-version}</version>
 			<scope>runtime</scope>
 		</dependency>
-		
 		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
@@ -107,8 +106,7 @@
 			<version>2.14.0</version>
 		</dependency>
 
-		<!-- @Inject -->
-		
+			<!-- @Inject -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -122,6 +120,8 @@
 		</dependency>
 				
 		<!-- Servlet -->
+		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -153,14 +153,17 @@
 		    <artifactId>commons-fileupload</artifactId>
 		    <version>1.4</version>
 		</dependency>
-	
+		
+
 		<!-- Test -->
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.13.1</version>
 			<scope>test</scope>
-		</dependency>      
+		</dependency>
+		   
 	</dependencies>
     <build>
         <plugins>

@@ -1,10 +1,14 @@
 package kr.co.controller;
 
+import java.io.File;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -78,13 +82,34 @@ public class BoardController {
 	}
 
 	@PostMapping("/modify")
-	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes ra) {
+	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes ra,@ModelAttribute("file") MultipartFile file, HttpSession session,@RequestParam("attach") String attach) {
 		log.info("modify..............");
 
 		log.info("modify : " + board.getBno());
 
+		//0309 추가	
+		//	String uuid = session.getServletContext().getRealPath("resources") + board.getFilepath();
+			String uuid = "D:\\jjjung\\JavaEE\\Testgj\\src\\main\\webapp\\resources" + board.getFilepath(); //절대경로 쓸 때 사용
+
+			if(file.getSize() > 0) {
+				board.setFilename(file.getOriginalFilename());
+				board.setFilepath(common.upload("board", file, session));
+				
+				File f = new File(uuid); //기존파일 -> 지워줘야함
+				if(f.exists()) {
+					f.delete();
+				}
+			}
+			if(attach.equals("y")) {
+				File f = new File(uuid); //기존파일 -> 지워줘야함
+				if(f.exists()) {
+					f.delete();
+				}
+			}
+		
 		int count = boardService.modify(board);
 
+		
 		if (count == 1) {
 			ra.addFlashAttribute("result", "success");
 		}
@@ -93,13 +118,21 @@ public class BoardController {
 		ra.addAttribute("amount", cri.getAmount());
 		ra.addAttribute("type", cri.getType());
 		ra.addAttribute("keyword", cri.getKeyword());
-
+	
+		
 		return "redirect:/board/get?bno=" + board.getBno();
 	}
 
 	@PostMapping("/remove")
 	public String remove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes ra) {
 		log.info("remove..............");
+		
+		File file = new File("D:\\jjjung\\JavaEE\\Testgj\\src\\main\\webapp\\resources" + boardService.get(bno).getFilepath()); //파일경로
+		
+		if(file.exists()) {
+			file.delete();
+		}
+		
 
 		int count = boardService.remove(bno);
 
@@ -147,6 +180,14 @@ public class BoardController {
 		log.info("comment_remove..............");
 		boardService.comment_remove(comment.getId());
 
+	}
+	
+	//0309추가
+	@ResponseBody // 데이터 자체를 보낼때?
+	@GetMapping("/download")
+	public File download(@RequestParam("bno") Long bno, HttpSession session, HttpServletResponse response) {
+		
+		return common.download(boardService.get(bno).getFilepath(),boardService.get(bno).getFilename() , session, response);
 	}
 
 }

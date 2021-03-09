@@ -12,8 +12,8 @@
 	<bean id="hikariConfi" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
 		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:system"></property>
-		<property name="username" value="gjgreen"></property>
-		<property name="password" value="gjgreen"></property>
+		<property name="username" value="gjtest"></property>
+		<property name="password" value="gjtest"></property>
 	</bean>
 	
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
@@ -25,7 +25,7 @@
 	</bean>
 	
 	<bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver\">
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="100000000" />
 		<property name="maxInMemorySize" value="100000000" />
 	</bean>

@@ -54,138 +54,149 @@
 								value="${board.content }"></c:out></textarea>
 					</div>
 				</div>
-				<form id="actionForm" >
+				<c:if test="${board.filename != null }">
+					<div class="form-group col-md-12">
+						<c:out value="${board.filename }"></c:out>
+						<button type="button" id="download" class="btn btn-outline-warning"
+							style="float: right;">Download</button>
+						<div class="mb-3"></div>
+					</div>
+				</c:if>
+				<form id="actionForm">
 					<input type="hidden" id="bno" name="bno" value="${board.bno }">
 					<input type="hidden" name="pageNum" value="${cri.pageNum }">
 					<input type="hidden" name="amount" value="${cri.amount }">
-					<input type="hidden" name="type" value="${cri.type }">
-					<input type="hidden" name="keyword" value="${cri.keyword }">
-					<button class="btn btn-outline-danger" id="btn1" 
-						style="float: right;" >Remove</button>
+					<input type="hidden" name="type" value="${cri.type }"> <input
+						type="hidden" name="keyword" value="${cri.keyword }">
+					<button class="btn btn-outline-danger" id="btn1"
+						style="float: right;">Remove</button>
 					<button class="btn btn-outline-dark" id="listBtn"
 						style="float: right;">Back to List</button>
 					<button class="btn btn-outline-primary" id="modifyBtn"
 						style="float: right;">Modify</button>
-					
+
 				</form>
 			</div>
 			<div class="input-group">
-				<input type="text" class="input-group-text" 
-				placeholder="Enter Writer" id="comment_writer" >
-				<textarea class="form-control" placeholder="Enter Comment" id="comment_content"></textarea>
-				<button type="button" class="btn btn-outline-info" id="comment_register">Submit</button>
+				<input type="text" class="input-group-text"
+					placeholder="Enter Writer" id="comment_writer">
+				<textarea class="form-control" placeholder="Enter Comment"
+					id="comment_content"></textarea>
+				<button type="button" class="btn btn-outline-info"
+					id="comment_register">Submit</button>
 			</div>
 		</div>
 	</div>
-		<div id="comment_list">
-		</div>
+	<div id="comment_list"></div>
 </main>
 <div class="modal" tabindex="-1" id="board_modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body" id="board_modal_body">
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary"data-dismiss="modal" id="btn2">Remove</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Modal title</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+			</div>
+			<div class="modal-body" id="board_modal_body">
+				<p>Modal body text goes here.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal"
+					id="btn2">Remove</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 
 <script type="text/javascript">
 	$(document).ready(function() {
 		var actionForm = $("#actionForm");
-		
-		$('#btn1').click(function(e){
+
+		$('#btn1').click(function(e) {
 			e.preventDefault();//이벤트 자동발생 막아줌
 			$('#board_modal_body').html("Are you sure you want to remove?");
 			$('#board_modal').modal('show');
 		});
-		
-		$('#btn2').click(function(e){
-			actionForm.attr("action","/board/remove").attr("method","post");
+
+		$('#btn2').click(function(e) {
+			actionForm.attr("action", "/board/remove").attr("method", "post");
 			actionForm.submit();
 		});
-		
-		
-		
-		$("#listBtn").on("click",function(e) {
-			
-			e.preventDefault(); 
-			
+
+		$("#listBtn").on("click", function(e) {
+
+			e.preventDefault();
+
 			actionForm.find("input[name=bno]").remove();
-			actionForm.attr("action","/board/list");
-			actionForm.attr("method","get");
+			actionForm.attr("action", "/board/list");
+			actionForm.attr("method", "get");
 			actionForm.submit();
-		
+
 		});
-		
-		$("#modifyBtn").on("click",function(e) {
-			
-			e.preventDefault(); 
-			
-			actionForm.attr("action","/board/modify");
-			actionForm.attr("method","get");
+
+		$("#modifyBtn").on("click", function(e) {
+
+			e.preventDefault();
+
+			actionForm.attr("action", "/board/modify");
+			actionForm.attr("method", "get");
 			actionForm.submit();
-		
+
 		});
-		
+
 		comment_list();
-		
-		function comment_list(){
+
+		function comment_list() {
 			$.ajax({
 				type : "GET",
 				url : "/board/comment/comment_get_list?bno=${board.bno}",
-				success : function(result){
+				success : function(result) {
 					$("#comment_list").html(result);
 				},
-				error : function(req, text){
-					alert(text+" : "+req.status);
+				error : function(req, text) {
+					alert(text + " : " + req.status);
 				}
 			});
 		}
-		
-			
-			$("#comment_register").on("click",function(e){
-				e.preventDefault(); 
-				console.log(".................");
-				
-				var comment = new Object();
-				comment.content = $("#comment_content").val();
-				comment.writer = $("#comment_writer").val();
-				
-				if(comment.content==="" || comment.writer===""){
-					alert("댓글을 입력하세요.");
-					return;
+
+		$("#comment_register").on("click", function(e) {
+			e.preventDefault();
+			console.log(".................");
+
+			var comment = new Object();
+			comment.content = $("#comment_content").val();
+			comment.writer = $("#comment_writer").val();
+
+			if (comment.content === "" || comment.writer === "") {
+				alert("댓글을 입력하세요.");
+				return;
+			}
+			comment.bno = "<c:out value='${board.bno} '></c:out>";
+
+			console.log(comment.bno);
+
+			$.ajax({
+				data : JSON.stringify(comment),
+				contentType : "application/json; charset=utf-8",
+				type : "POST",
+				url : "/board/comment/comment_register",
+				success : function() {
+					comment.content = $("#comment_content").val("");
+					comment.writer = $("#comment_writer").val("");
+					comment_list();
+				},
+				error : function(req, text) {
+					alert(text + " : " + req.status);
 				}
-				comment.bno = "<c:out value='${board.bno} '></c:out>";
-				
-				console.log(comment.bno);
-				
-				$.ajax({
-					data : JSON.stringify(comment),
-					contentType : "application/json; charset=utf-8",
-					type : "POST",
-					url : "/board/comment/comment_register",
-					success : function(){
-						comment.content = $("#comment_content").val("");
-						comment.writer = $("#comment_writer").val("");
-						comment_list();
-					},
-					error : function(req, text){
-						alert(text+" : "+req.status);
-					}
-				});
 			});
+		});
 		
-		
+		$("#download").on("click", function(){
+			location = '/board/download?bno=${board.bno}';
+		});
+
 	});
 </script>
 
